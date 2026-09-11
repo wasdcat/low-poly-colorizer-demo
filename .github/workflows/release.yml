@@ -75,3 +75,24 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: dist/*.zip
+
+      - name: Remove builds from older releases
+        # Only the newest release keeps downloads; older ones keep their notes
+        # and GitHub's source archives. This runs after the new builds are
+        # attached, so there is never a moment without any. A pre-release
+        # leaves the last full release's builds alone. Drafts are never touched.
+        if: github.event_name == 'release' && !github.event.release.prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          tags=$(gh release list --limit 1000 --json tagName,isDraft --jq '.[] | select(.isDraft | not) | .tagName')
+          for tag in $tags; do
+            [ "$tag" = "$TAG" ] && continue
+            assets=$(gh release view "$tag" --json assets --jq '.assets[].name')
+            for asset in $assets; do
+              echo "Removing $asset from $tag"
+              gh release delete-asset "$tag" "$asset" --yes
+            done
+          done

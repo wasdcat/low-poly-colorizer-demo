@@ -44,6 +44,10 @@ const GAME_FACTS := [
 @export var controller: Node
 
 var _panel: PanelContainer
+## Locked while a game is on; see [method _on_game_changed].
+var _play: Button
+## Unlocked only while a game is on.
+var _reset: Button
 var _moves: Control
 var _moves_count: Label
 var _success: Control
@@ -213,12 +217,13 @@ func _puzzle_section(box: VBoxContainer) -> void:
 			func(value: float) -> void: cube.size = int(value))
 	_slider(box, "Gap", 0.0, 0.6, 0.01, cube.gap, _format_float,
 			func(value: float) -> void: cube.gap = value)
-	var play := _button(box, "Scramble to Play", func() -> void: cube.scramble())
-	play.custom_minimum_size.y = 38.0
+	_play = _button(box, "Scramble to Play", func() -> void: cube.scramble())
+	_play.custom_minimum_size.y = 38.0
+	_make_prominent(_play)
 	var row := HBoxContainer.new()
 	box.add_child(row)
 	_button(row, "Undo", cube.undo)
-	_button(row, "Reset", cube.reset)
+	_reset = _button(row, "Reset", cube.reset)
 
 
 func _looks_section(box: VBoxContainer) -> void:
@@ -241,6 +246,9 @@ func _on_scheme_selected(index: int) -> void:
 
 
 func _on_game_changed() -> void:
+	# One game at a time: the next can start once this one is solved or reset.
+	_play.disabled = cube.is_playing()
+	_reset.disabled = not cube.is_playing()
 	_moves.visible = cube.is_playing()
 	_moves_count.text = str(cube.moves)
 	if cube.is_playing() and _success_tween:  # a new game clears the last success
@@ -431,9 +439,7 @@ func _fill_help(box: VBoxContainer) -> void:
 	cap.border_color = Color(1.0, 1.0, 1.0, 0.25)
 	cap.set_border_width_all(1)
 	cap.border_width_bottom = 2
-	var bold := FontVariation.new()
-	bold.base_font = get_theme_default_font()
-	bold.variation_embolden = 0.8
+	var bold := _bold_font()
 	for entry in CONTROLS:
 		var keys := HBoxContainer.new()
 		keys.add_theme_constant_override(&"separation", 6)
@@ -575,6 +581,29 @@ func _button(box: Container, text: String, on_press: Callable) -> Button:
 	button.pressed.connect(on_press)
 	box.add_child(button)
 	return button
+
+
+## Fills [param button] with the accent color, in bold: the one action the
+## panel invites. Disabled, it fades back into the panel.
+func _make_prominent(button: Button) -> void:
+	var ink := Color(0.12, 0.09, 0.03)
+	button.add_theme_font_override(&"font", _bold_font())
+	button.add_theme_stylebox_override(&"normal", _button_box(ACCENT))
+	button.add_theme_stylebox_override(&"hover", _button_box(ACCENT.lightened(0.25)))
+	button.add_theme_stylebox_override(&"pressed", _button_box(ACCENT.darkened(0.15)))
+	button.add_theme_stylebox_override(&"disabled", _button_box(Color(1.0, 1.0, 1.0, 0.05)))
+	button.add_theme_stylebox_override(&"focus", StyleBoxEmpty.new())
+	for color in [&"font_color", &"font_hover_color", &"font_pressed_color", &"font_focus_color"]:
+		button.add_theme_color_override(color, ink)
+	button.add_theme_color_override(&"font_disabled_color", Color(1.0, 1.0, 1.0, 0.3))
+
+
+## The theme's font, emboldened.
+func _bold_font() -> FontVariation:
+	var bold := FontVariation.new()
+	bold.base_font = get_theme_default_font()
+	bold.variation_embolden = 0.8
+	return bold
 
 
 func _slider(box: Container, title: String, from: float, to: float, step: float, value: float,

@@ -49,8 +49,8 @@ can. The UI is available in English and German.
 
 ## Download
 
-Every [release](../../releases) comes with builds for Windows, Linux and macOS.
-Unzip one and start it; nothing needs to be installed.
+The [latest release](../../releases/latest) comes with builds for Windows, Linux
+and macOS. Unzip one and start it; nothing needs to be installed.
 
 The macOS build is not notarized by Apple. On its first start macOS refuses to
 open it. To allow it, go to **System Settings ▸ Privacy & Security** and click
@@ -67,7 +67,7 @@ godot --headless --script res://tests/run_tests.gd
 ```
 
 GitHub Actions runs them on every push. Publishing a release exports the three
-builds and attaches them to it.
+builds and attaches them to it, and removes the builds of older releases.
 
 ## License
 

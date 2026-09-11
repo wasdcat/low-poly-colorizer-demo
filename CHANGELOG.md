@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-09-11
+
+### Changed
+- **Scramble to Play**: The button is filled with the accent color, so it stands out as the panel's main action.
+- **One Game at a Time**: *Scramble to Play* is locked while a game is on. Solving the cube or clicking *Reset* unlocks it again. Changing the cube's size also ends the game and unlocks it. *Reset* can only be clicked during a game.
+- **Builds**: Only the latest release keeps the Windows, Linux and macOS builds. Publishing a new release removes them from the older ones, which keep their notes and source code.
+
 ## [1.0.0] - 2026-09-11
 
 ### Added
