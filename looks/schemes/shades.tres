@@ -1,0 +1,49 @@
+[gd_resource type="Resource" script_class="CubeScheme" format=3 uid="uid://cylx5bm3pn7yi"]
+
+[ext_resource type="Script" uid="uid://6ld0igv4ei6m" path="res://scripts/cube_scheme.gd" id="1_scheme"]
+[ext_resource type="Script" uid="uid://cloh4u0hggxgb" path="res://assets/materials/lpc/lpc_singlecolor_resource.gd" id="2_look"]
+
+[sub_resource type="Resource" id="Resource_back"]
+resource_name = "Row 6"
+script = ExtResource("2_look")
+palette_cell_x = 11
+palette_cell_y = 6
+
+[sub_resource type="Resource" id="Resource_down"]
+resource_name = "Row 7"
+script = ExtResource("2_look")
+palette_cell_x = 11
+palette_cell_y = 7
+
+[sub_resource type="Resource" id="Resource_front"]
+resource_name = "Row 3"
+script = ExtResource("2_look")
+palette_cell_x = 11
+palette_cell_y = 3
+
+[sub_resource type="Resource" id="Resource_left"]
+resource_name = "Row 4"
+script = ExtResource("2_look")
+palette_cell_x = 11
+palette_cell_y = 4
+
+[sub_resource type="Resource" id="Resource_right"]
+resource_name = "Row 1"
+script = ExtResource("2_look")
+palette_cell_x = 11
+palette_cell_y = 1
+
+[sub_resource type="Resource" id="Resource_up"]
+resource_name = "Row 0"
+script = ExtResource("2_look")
+palette_cell_x = 11
+
+[resource]
+resource_name = "Shades (one hue)"
+script = ExtResource("1_scheme")
+up = SubResource("Resource_up")
+down = SubResource("Resource_down")
+front = SubResource("Resource_front")
+back = SubResource("Resource_back")
+right = SubResource("Resource_right")
+left = SubResource("Resource_left")

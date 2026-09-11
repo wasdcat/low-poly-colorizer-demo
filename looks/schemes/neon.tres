@@ -1,0 +1,56 @@
+[gd_resource type="Resource" script_class="CubeScheme" format=3 uid="uid://0vooldya8bhf"]
+
+[ext_resource type="Script" uid="uid://6ld0igv4ei6m" path="res://scripts/cube_scheme.gd" id="1_scheme"]
+[ext_resource type="Script" uid="uid://cloh4u0hggxgb" path="res://assets/materials/lpc/lpc_singlecolor_resource.gd" id="2_look"]
+
+[sub_resource type="Resource" id="Resource_back"]
+resource_name = "Blue Glow"
+script = ExtResource("2_look")
+palette_cell_x = 11
+palette_cell_y = 4
+preset = 3
+
+[sub_resource type="Resource" id="Resource_down"]
+resource_name = "Yellow Glow"
+script = ExtResource("2_look")
+palette_cell_x = 4
+palette_cell_y = 4
+preset = 3
+
+[sub_resource type="Resource" id="Resource_front"]
+resource_name = "Green Glow"
+script = ExtResource("2_look")
+palette_cell_x = 7
+palette_cell_y = 4
+preset = 3
+
+[sub_resource type="Resource" id="Resource_left"]
+resource_name = "Cyan Glow"
+script = ExtResource("2_look")
+palette_cell_x = 9
+palette_cell_y = 4
+preset = 3
+
+[sub_resource type="Resource" id="Resource_right"]
+resource_name = "Red Glow"
+script = ExtResource("2_look")
+palette_cell_x = 1
+palette_cell_y = 4
+preset = 3
+
+[sub_resource type="Resource" id="Resource_up"]
+resource_name = "Magenta Glow"
+script = ExtResource("2_look")
+palette_cell_x = 14
+palette_cell_y = 4
+preset = 3
+
+[resource]
+resource_name = "Neon"
+script = ExtResource("1_scheme")
+up = SubResource("Resource_up")
+down = SubResource("Resource_down")
+front = SubResource("Resource_front")
+back = SubResource("Resource_back")
+right = SubResource("Resource_right")
+left = SubResource("Resource_left")

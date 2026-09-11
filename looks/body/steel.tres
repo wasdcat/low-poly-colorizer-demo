@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="LpcSinglecolorResource" format=3]
+
+[ext_resource type="Script" path="res://assets/materials/lpc/lpc_singlecolor_resource.gd" id="1_look"]
+
+[resource]
+script = ExtResource("1_look")
+resource_name = "Steel"
+palette_cell_x = 0
+palette_cell_y = 3
+preset = 1

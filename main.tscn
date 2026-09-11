@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://dc80hd5e3qrfc"]
+
+[ext_resource type="Script" uid="uid://26k777a52oc" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://drr3beftqxsau" path="res://scripts/orbit_camera.gd" id="2_orbit"]
+[ext_resource type="Script" uid="uid://rwabn1wkb3n8" path="res://scripts/rubiks_cube.gd" id="3_cube"]
+[ext_resource type="Script" uid="uid://b4p75a07yl6ot" path="res://scripts/cube_looks.gd" id="4_looks"]
+[ext_resource type="Script" uid="uid://b00in03pkc86i" path="res://scripts/demo_ui.gd" id="5_ui"]
+[ext_resource type="Script" uid="uid://6ld0igv4ei6m" path="res://scripts/cube_scheme.gd" id="6_scheme"]
+[ext_resource type="Script" uid="uid://cloh4u0hggxgb" path="res://assets/materials/lpc/lpc_singlecolor_resource.gd" id="7_look"]
+[ext_resource type="Resource" uid="uid://crnv267vxrpnt" path="res://looks/schemes/classic.tres" id="8_classic"]
+[ext_resource type="Resource" uid="uid://dmtytfu84xmsl" path="res://looks/schemes/showroom.tres" id="9_showroom"]
+[ext_resource type="Resource" uid="uid://0vooldya8bhf" path="res://looks/schemes/neon.tres" id="10_neon"]
+[ext_resource type="Resource" uid="uid://cnfuv5dljcsnx" path="res://looks/schemes/rainbow.tres" id="11_rainbow"]
+[ext_resource type="Resource" uid="uid://cylx5bm3pn7yi" path="res://looks/schemes/shades.tres" id="12_shades"]
+[ext_resource type="Resource" uid="uid://bwr30rvcum1tc" path="res://looks/schemes/greyscale.tres" id="13_greyscale"]
+[ext_resource type="Resource" path="res://looks/body/black.tres" id="14_black"]
+[ext_resource type="Resource" path="res://looks/body/white.tres" id="15_white"]
+[ext_resource type="Resource" path="res://looks/body/steel.tres" id="16_steel"]
+[ext_resource type="Resource" path="res://looks/body/gold.tres" id="17_gold"]
+[ext_resource type="Shader" uid="uid://nfa7fq0hxin4" path="res://environment/studio_sky.gdshader" id="18_sky"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_studio"]
+shader = ExtResource("18_sky")
+shader_parameter/backdrop = Color(0.14, 0.145, 0.16, 1)
+shader_parameter/ceiling = Color(0.95, 0.96, 1, 1)
+shader_parameter/walls = Color(0.55, 0.56, 0.58, 1)
+shader_parameter/floor_color = Color(0.3, 0.3, 0.31, 1)
+shader_parameter/softbox_energy = 3.5
+
+[sub_resource type="Sky" id="Sky_studio"]
+sky_material = SubResource("ShaderMaterial_studio")
+
+[sub_resource type="Environment" id="Environment_studio"]
+background_mode = 2
+sky = SubResource("Sky_studio")
+ambient_light_source = 3
+reflected_light_source = 2
+tonemap_mode = 2
+glow_enabled = true
+glow_hdr_threshold = 1.5
+
+[node name="Main" type="Node3D" unique_id=978476445 node_paths=PackedStringArray("cube", "rig")]
+script = ExtResource("1_main")
+cube = NodePath("Cube")
+rig = NodePath("CameraRig")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1209786012]
+environment = SubResource("Environment_studio")
+
+[node name="CameraRig" type="Node3D" parent="." unique_id=141695232 node_paths=PackedStringArray("camera")]
+script = ExtResource("2_orbit")
+camera = NodePath("Camera3D")
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig" unique_id=1473252172]
+fov = 35.0
+
+[node name="KeyLight" type="DirectionalLight3D" parent="CameraRig" unique_id=130837858]
+transform = Transform3D(0.95105654, 0.18597107, -0.24679196, 0, 0.79863554, 0.601815, 0.309017, -0.5723601, 0.75954753, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Cube" type="Node3D" parent="." unique_id=2054241236]
+script = ExtResource("3_cube")
+
+[node name="Looks" type="Node" parent="." unique_id=627242840 node_paths=PackedStringArray("cube")]
+script = ExtResource("4_looks")
+cube = NodePath("../Cube")
+schemes = Array[ExtResource("6_scheme")]([ExtResource("8_classic"), ExtResource("9_showroom"), ExtResource("10_neon"), ExtResource("11_rainbow"), ExtResource("12_shades"), ExtResource("13_greyscale")])
+body_looks = Array[ExtResource("7_look")]([ExtResource("14_black"), ExtResource("15_white"), ExtResource("16_steel"), ExtResource("17_gold")])
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1014682512]
+
+[node name="Panel" type="Control" parent="UI" unique_id=1776922515 node_paths=PackedStringArray("cube", "looks", "controller", "world")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_ui")
+cube = NodePath("../../Cube")
+looks = NodePath("../../Looks")
+controller = NodePath("../..")
+world = NodePath("../../WorldEnvironment")

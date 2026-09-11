@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="32" viewBox="0 0 60 40">
+  <!-- Germany at 3:2, the same shape as the other flags of the demo. -->
+  <defs>
+    <clipPath id="flag">
+      <rect width="60" height="40" rx="4"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#flag)">
+    <rect width="60" height="13.34" fill="#000000"/>
+    <rect y="13.33" width="60" height="13.34" fill="#DD0000"/>
+    <rect y="26.66" width="60" height="13.34" fill="#FFCE00"/>
+  </g>
+  <!-- Lifts the black stripe off a dark background. -->
+  <rect x="0.5" y="0.5" width="59" height="39" rx="3.5" fill="none" stroke="#FFFFFF" stroke-opacity="0.3"/>
+</svg>

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://biwuxyt5jeo1q"
-path="res://.godot/imported/lpc_palette.png-74b1dcf35ab6f9d006305be42bc28acc.ctex"
+uid="uid://cbt35d1vu0rsl"
+path="res://.godot/imported/gb.svg-af986697418a2d420a9127cf3e6bd0fd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/materials/lpc/lpc_palette.png"
-dest_files=["res://.godot/imported/lpc_palette.png-74b1dcf35ab6f9d006305be42bc28acc.ctex"]
+source_file="res://assets/flags/gb.svg"
+dest_files=["res://.godot/imported/gb.svg-af986697418a2d420a9127cf3e6bd0fd.ctex"]
 
 [params]
 
@@ -26,6 +26,8 @@ compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false
 mipmaps/limit=-1
+mipmaps/preserve_alpha_test_coverage=false
+mipmaps/alpha_test_threshold=0.5
 roughness/mode=0
 roughness/src_normal=""
 process/channel_remap/red=0
@@ -38,4 +40,7 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

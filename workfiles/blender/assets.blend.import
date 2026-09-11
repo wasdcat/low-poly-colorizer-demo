@@ -47,49 +47,30 @@ _subresources={
 "use_external/fallback_path": "res://assets/materials/lpc/lpc_multicolor.tres",
 "use_external/path": "res://assets/materials/lpc/lpc_multicolor.tres"
 },
-"lpc_sigglecolor_1": {
-"use_external/enabled": true,
-"use_external/fallback_path": "res://assets/materials/lpc/lpc_singlecolor.tres",
-"use_external/path": "res://assets/materials/lpc/lpc_singlecolor.tres"
-},
-"lpc_singlecolor_2": {
-"use_external/enabled": true,
-"use_external/fallback_path": "res://assets/materials/lpc/lpc_singlecolor.tres",
-"use_external/path": "res://assets/materials/lpc/lpc_singlecolor.tres"
-},
-"lpc_singlecolor_3": {
+"lpc_singlecolor": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://assets/materials/lpc/lpc_singlecolor.tres",
 "use_external/path": "res://assets/materials/lpc/lpc_singlecolor.tres"
 }
 },
 "meshes": {
-"assets_cubie_center": {
+"assets_cubie_color_sticker": {
 "generate/lightmap_uv": 0,
 "generate/lods": 0,
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 20.0,
 "save_to_file/enabled": true,
-"save_to_file/fallback_path": "res://assets/meshes/cubie_center.tres",
-"save_to_file/path": "uid://dbug082qvhc6k"
+"save_to_file/fallback_path": "res://assets/meshes/cubie_color_sticker.tres",
+"save_to_file/path": "uid://muw3hqhlbc5i"
 },
-"assets_cubie_corner": {
+"assets_cubie_cube": {
 "generate/lightmap_uv": 0,
 "generate/lods": 0,
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 20.0,
 "save_to_file/enabled": true,
-"save_to_file/fallback_path": "res://assets/meshes/cubie_corner.tres",
-"save_to_file/path": "uid://clmg5csjbwk5q"
-},
-"assets_cubie_edge": {
-"generate/lightmap_uv": 0,
-"generate/lods": 0,
-"generate/shadow_meshes": 0,
-"lods/normal_merge_angle": 20.0,
-"save_to_file/enabled": true,
-"save_to_file/fallback_path": "res://assets/meshes/cubie_edge.tres",
-"save_to_file/path": "uid://ckekiflda0slq"
+"save_to_file/fallback_path": "res://assets/meshes/cubie_cube.tres",
+"save_to_file/path": "uid://bxwcdwdoeffwh"
 }
 }
 }

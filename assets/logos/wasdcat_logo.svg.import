@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://biwuxyt5jeo1q"
-path="res://.godot/imported/lpc_palette.png-74b1dcf35ab6f9d006305be42bc28acc.ctex"
+uid="uid://drsfnipnxrmqt"
+path="res://.godot/imported/wasdcat_logo.svg-8221de4b5f6338ead47791d1ac5cf3e0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/materials/lpc/lpc_palette.png"
-dest_files=["res://.godot/imported/lpc_palette.png-74b1dcf35ab6f9d006305be42bc28acc.ctex"]
+source_file="res://assets/logos/wasdcat_logo.svg"
+dest_files=["res://.godot/imported/wasdcat_logo.svg-8221de4b5f6338ead47791d1ac5cf3e0.ctex"]
 
 [params]
 
@@ -24,8 +24,10 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
+mipmaps/preserve_alpha_test_coverage=false
+mipmaps/alpha_test_threshold=0.5
 roughness/mode=0
 roughness/src_normal=""
 process/channel_remap/red=0
@@ -38,4 +40,7 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1
+svg/scale=0.25
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false
