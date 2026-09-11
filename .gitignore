@@ -1,0 +1,13 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Blender backup files
+*.blend?.*
+*.blend[0-9]
+*.blend[0-9][0-9]
+*.tmp
+
+# Editor / local tooling
+.vscode/
+.claude/

@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3]
+
+[ext_resource type="Shader" path="lpc_multicolor.gdshader" id="1"]
+[ext_resource type="Texture2D" path="lpc_palette.png" id="2"]
+[ext_resource type="Texture2D" path="lpc_preset_lut.png" id="3"]
+
+[resource]
+resource_name = "lpc_multicolor"
+shader = ExtResource("1")
+shader_parameter/emission_factor = 1.0
+shader_parameter/clearcoat_roughness_value = 0.0
+shader_parameter/lpc_palette_tex = ExtResource("2")
+shader_parameter/lpc_preset_lut_tex = ExtResource("3")
