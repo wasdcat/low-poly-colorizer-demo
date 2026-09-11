@@ -2,7 +2,7 @@ extends Control
 
 ## The demo's side panel and everything drawn over the 3D view: move count,
 ## success, the help and about windows, the studio link. It only wires
-## controls to CubeLooks (everything LPC) and RubiksCube (the puzzle) --
+## controls to CubeLooks (everything LPC) and PuzzleCube (the puzzle) --
 ## cube_looks.gd is the file worth reading. The texts are English message ids,
 ## see translations.gd.
 
@@ -11,7 +11,6 @@ const Translations := preload("res://scripts/translations.gd")
 const ACCENT := Color(1.0, 0.8, 0.4)
 const TEXT := Color(1.0, 1.0, 1.0, 0.86)
 const DIM := Color(1.0, 1.0, 1.0, 0.62)
-const DARK_STUDIO := Color(0.03, 0.03, 0.04)
 ## Seconds the success message stays up before it fades.
 const SUCCESS_TIME := 3.0
 ## Both logos are imported with mipmaps: they are shown far smaller than they are.
@@ -34,17 +33,15 @@ const CONTROLS := [
 ## export runs on another one.
 const GAME_FACTS := [
 	"Made with Godot 4.8 and Low Poly Colorizer's export for Godot 4. The cube is built at runtime from just two meshes – body and sticker – in any size from 2 to 7.",
-	"All bodies and stickers share one material: lpc_singlecolor, LPC's material for meshes that are not painted face by face in Blender.",
-	"How it works: palette cell, preset and emission are instance uniforms – they live on each MeshInstance3D, not on the material.",
-	"What it's good for: one material, any number of looks. Switching a look is four set_instance_shader_parameter() calls – no material copies, no shader recompiles. Every color scheme here is just six saved looks.",
-	"Keep in mind: instance uniforms belong to the node, not to a surface – all surfaces of a mesh that use lpc_singlecolor show the same look. Other surfaces can carry any other material. That's why every sticker here is a node of its own.",
+	"Bodies and stickers are colored with the lpc_singlecolor material, which LPC ships with its export from Blender.",
+	"One look per mesh: a whole mesh – or a single surface of it – gets one color from the LPC palette and one LPC preset. That's why every sticker here is a node of its own.",
+	"What it's good for: consistency. lpc_singlecolor uses the same palette and presets as lpc_multicolor – so all your own assets are colored from one shared palette, whichever of the two materials they use.",
 ]
 
-@export var cube: RubiksCube
+@export var cube: PuzzleCube
 @export var looks: CubeLooks
 ## main.gd, for its camera rig, which is told where the free part of the screen is.
 @export var controller: Node
-@export var world: WorldEnvironment
 
 var _panel: PanelContainer
 var _moves: Control
@@ -56,7 +53,6 @@ var _help: Dialog
 var _about: Dialog
 ## The top bar's window buttons. At most one is pressed, so at most one window is open.
 var _dialog_buttons := ButtonGroup.new()
-var _studio_background: Color
 
 
 ## A window over the view. Its dimmed backdrop keeps the mouse off the cube.
@@ -72,7 +68,6 @@ class Dialog:
 func _ready() -> void:
 	Translations.install()
 	TranslationServer.set_locale(Translations.current())
-	_studio_background = _studio_sky().get_shader_parameter(&"backdrop")
 	# Stacked in this order: the overlays of the view, the windows over them,
 	# the panel on top -- it stays usable while a window is open.
 	_build_moves()
@@ -87,7 +82,6 @@ func _ready() -> void:
 	_title_section(box)
 	_puzzle_section(box)
 	_looks_section(box)
-	_scene_section(box)
 
 	cube.game_changed.connect(_on_game_changed)
 	cube.solved.connect(_on_solved)
@@ -215,7 +209,7 @@ func _title_section(box: VBoxContainer) -> void:
 
 func _puzzle_section(box: VBoxContainer) -> void:
 	_heading(box, "Puzzle")
-	_slider(box, "Size", RubiksCube.MIN_SIZE, RubiksCube.MAX_SIZE, 1, cube.size, _format_size,
+	_slider(box, "Size", PuzzleCube.MIN_SIZE, PuzzleCube.MAX_SIZE, 1, cube.size, _format_size,
 			func(value: float) -> void: cube.size = int(value))
 	_slider(box, "Gap", 0.0, 0.6, 0.01, cube.gap, _format_float,
 			func(value: float) -> void: cube.gap = value)
@@ -242,25 +236,8 @@ func _looks_section(box: VBoxContainer) -> void:
 			func(index: int) -> void: looks.body_look = looks.body_looks[index])
 
 
-func _scene_section(box: VBoxContainer) -> void:
-	_heading(box, "Scene")
-	var dark := CheckButton.new()
-	dark.text = "Dark studio"
-	dark.toggled.connect(_on_dark_studio_toggled)
-	box.add_child(dark)
-
-
 func _on_scheme_selected(index: int) -> void:
 	looks.scheme = looks.schemes[index] if index < looks.schemes.size() else looks.random_scheme()
-
-
-func _on_dark_studio_toggled(on: bool) -> void:
-	_studio_sky().set_shader_parameter(&"backdrop", DARK_STUDIO if on else _studio_background)
-
-
-## studio_sky.gdshader: only its backdrop is visible, the rest feeds reflections.
-func _studio_sky() -> ShaderMaterial:
-	return world.environment.sky.sky_material as ShaderMaterial
 
 
 func _on_game_changed() -> void:

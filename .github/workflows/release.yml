@@ -1,0 +1,77 @@
+name: Release (Attach Builds)
+
+on:
+  release:
+    types: [published]
+  # A manual run builds the same files and keeps them as a workflow artifact,
+  # to try the exports without publishing a release.
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release-builds:
+    name: Test, export & attach Windows, Linux and macOS builds
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check tag against project version
+        if: github.event_name == 'release'
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          version=$(sed -n 's/^config\/version="\(.*\)"$/\1/p' project.godot)
+          if [ "${TAG#v}" != "$version" ]; then
+            echo "::error::Release tag $TAG does not match config/version \"$version\" in project.godot."
+            exit 1
+          fi
+
+      - name: Set up Godot & import the project
+        uses: ./.github/actions/setup-godot
+        with:
+          templates: "true"
+
+      - name: Run test suite
+        run: godot --headless --script res://tests/run_tests.gd
+
+      - name: Export
+        run: |
+          mkdir -p build/windows build/linux build/macos
+          godot --headless --export-release "Windows Desktop" build/windows/low-poly-colorizer-demo.exe
+          godot --headless --export-release "Linux" build/linux/low-poly-colorizer-demo.x86_64
+          godot --headless --export-release "macOS" build/macos/low-poly-colorizer-demo.zip
+          for file in build/windows/low-poly-colorizer-demo.exe build/linux/low-poly-colorizer-demo.x86_64 build/macos/low-poly-colorizer-demo.zip; do
+            test -s "$file" || { echo "::error::Export missing: $file"; exit 1; }
+          done
+
+      - name: Package
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          name="low-poly-colorizer-demo-${TAG:-${GITHUB_SHA::7}}"
+          mkdir dist
+          (cd build/windows && zip -9 "../../dist/$name-windows.zip" low-poly-colorizer-demo.exe)
+          # zip keeps the executable bit, a bare file attached to a release would not.
+          (cd build/linux && chmod +x low-poly-colorizer-demo.x86_64 && zip -9 "../../dist/$name-linux.zip" low-poly-colorizer-demo.x86_64)
+          # Godot already packs the .app into a zip.
+          cp build/macos/low-poly-colorizer-demo.zip "dist/$name-macos.zip"
+          ls -l dist
+
+      - name: Keep builds as workflow artifact
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: builds
+          path: dist/*.zip
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Attach builds to GitHub Release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.zip

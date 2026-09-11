@@ -2,6 +2,10 @@
 .godot/
 /android/
 
+# Export output; its .gdignore keeps Godot from importing the builds
+/build/*
+!/build/.gdignore
+
 # Blender backup files
 *.blend?.*
 *.blend[0-9]

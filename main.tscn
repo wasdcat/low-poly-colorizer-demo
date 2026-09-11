@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://26k777a52oc" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="Script" uid="uid://drr3beftqxsau" path="res://scripts/orbit_camera.gd" id="2_orbit"]
-[ext_resource type="Script" uid="uid://rwabn1wkb3n8" path="res://scripts/rubiks_cube.gd" id="3_cube"]
+[ext_resource type="Script" uid="uid://rwabn1wkb3n8" path="res://scripts/puzzle_cube.gd" id="3_cube"]
 [ext_resource type="Script" uid="uid://b4p75a07yl6ot" path="res://scripts/cube_looks.gd" id="4_looks"]
 [ext_resource type="Script" uid="uid://b00in03pkc86i" path="res://scripts/demo_ui.gd" id="5_ui"]
 [ext_resource type="Script" uid="uid://6ld0igv4ei6m" path="res://scripts/cube_scheme.gd" id="6_scheme"]
@@ -17,15 +17,24 @@
 [ext_resource type="Resource" path="res://looks/body/white.tres" id="15_white"]
 [ext_resource type="Resource" path="res://looks/body/steel.tres" id="16_steel"]
 [ext_resource type="Resource" path="res://looks/body/gold.tres" id="17_gold"]
-[ext_resource type="Shader" uid="uid://nfa7fq0hxin4" path="res://environment/studio_sky.gdshader" id="18_sky"]
+[ext_resource type="Shader" uid="uid://nfa7fq0hxin4" path="res://environment/starfield_sky.gdshader" id="18_sky"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_studio"]
 shader = ExtResource("18_sky")
-shader_parameter/backdrop = Color(0.14, 0.145, 0.16, 1)
 shader_parameter/ceiling = Color(0.95, 0.96, 1, 1)
 shader_parameter/walls = Color(0.55, 0.56, 0.58, 1)
 shader_parameter/floor_color = Color(0.3, 0.3, 0.31, 1)
 shader_parameter/softbox_energy = 3.5
+shader_parameter/space_color = Color(0.01, 0.012, 0.02, 1)
+shader_parameter/star_density = 0.5
+shader_parameter/star_brightness = 1.0
+shader_parameter/star_size = 0.8
+shader_parameter/milky_way_color = Color(0.6, 0.65, 0.8, 1)
+shader_parameter/milky_way_strength = 0.05
+shader_parameter/galactic_pole = Vector3(-0.69, 0.72, 0.07)
+shader_parameter/nebula_color_a = Color(0.45, 0.15, 0.6, 1)
+shader_parameter/nebula_color_b = Color(0.1, 0.35, 0.6, 1)
+shader_parameter/nebula_strength = 0.12
 
 [sub_resource type="Sky" id="Sky_studio"]
 sky_material = SubResource("ShaderMaterial_studio")
@@ -69,7 +78,7 @@ body_looks = Array[ExtResource("7_look")]([ExtResource("14_black"), ExtResource(
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1014682512]
 
-[node name="Panel" type="Control" parent="UI" unique_id=1776922515 node_paths=PackedStringArray("cube", "looks", "controller", "world")]
+[node name="Panel" type="Control" parent="UI" unique_id=1776922515 node_paths=PackedStringArray("cube", "looks", "controller")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -81,4 +90,3 @@ script = ExtResource("5_ui")
 cube = NodePath("../../Cube")
 looks = NodePath("../../Looks")
 controller = NodePath("../..")
-world = NodePath("../../WorldEnvironment")

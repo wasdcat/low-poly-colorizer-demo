@@ -1,0 +1,32 @@
+name: CI (Test)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test & smoke-run
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Godot & import the project
+        uses: ./.github/actions/setup-godot
+
+      - name: Run test suite
+        run: godot --headless --script res://tests/run_tests.gd
+
+      - name: Run the demo for 300 frames
+        # Script errors do not change Godot's exit code, so read the log.
+        run: |
+          godot --headless --quit-after 300 2>&1 | tee run.log
+          if grep -qE "SCRIPT ERROR|^ERROR:" run.log; then
+            echo "::error::The demo logged errors, see above."
+            exit 1
+          fi

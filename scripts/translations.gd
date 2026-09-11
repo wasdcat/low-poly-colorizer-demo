@@ -31,8 +31,6 @@ const TABLES := {
 		"Material/Colors": "Material/Farben",
 		"Stickers": "Sticker",
 		"Body": "Körper",
-		"Scene": "Szene",
-		"Dark studio": "Dunkles Studio",
 		# Color schemes and body looks (their resource names)
 		"Classic": "Klassisch",
 		"Showroom (mixed presets)": "Showroom (gemischte Presets)",
@@ -75,14 +73,12 @@ const TABLES := {
 		"About this game": "Über dieses Spiel",
 		"Made with Godot 4.8 and Low Poly Colorizer's export for Godot 4. The cube is built at runtime from just two meshes – body and sticker – in any size from 2 to 7.":
 				"Erstellt mit Godot 4.8 und dem Godot-4-Export von Low Poly Colorizer. Der Würfel entsteht zur Laufzeit aus nur zwei Meshes – Körper und Sticker – in jeder Größe von 2 bis 7.",
-		"All bodies and stickers share one material: lpc_singlecolor, LPC's material for meshes that are not painted face by face in Blender.":
-				"Alle Körper und Sticker teilen sich ein Material: lpc_singlecolor, das LPC-Material für Meshes, die nicht in Blender Fläche für Fläche bemalt sind.",
-		"How it works: palette cell, preset and emission are instance uniforms – they live on each MeshInstance3D, not on the material.":
-				"So funktioniert es: Palettenfeld, Preset und Emission sind Instance-Uniforms – sie sitzen auf jeder MeshInstance3D, nicht im Material.",
-		"What it's good for: one material, any number of looks. Switching a look is four set_instance_shader_parameter() calls – no material copies, no shader recompiles. Every color scheme here is just six saved looks.":
-				"Wozu das gut ist: ein Material, beliebig viele Looks. Ein Look-Wechsel sind vier set_instance_shader_parameter()-Aufrufe – keine Materialkopien, keine Shader-Neukompilierung. Jedes Farbschema hier besteht nur aus sechs gespeicherten Looks.",
-		"Keep in mind: instance uniforms belong to the node, not to a surface – all surfaces of a mesh that use lpc_singlecolor show the same look. Other surfaces can carry any other material. That's why every sticker here is a node of its own.":
-				"Zu beachten: Instance-Uniforms gehören zum Node, nicht zur Surface – alle Surfaces eines Meshes mit lpc_singlecolor zeigen denselben Look. Andere Surfaces können beliebige andere Materialien tragen. Deshalb ist hier jeder Sticker ein eigener Node.",
+		"Bodies and stickers are colored with the lpc_singlecolor material, which LPC ships with its export from Blender.":
+				"Körper und Sticker sind mit dem Material lpc_singlecolor gefärbt, das LPC beim Export aus Blender mitliefert.",
+		"One look per mesh: a whole mesh – or a single surface of it – gets one color from the LPC palette and one LPC preset. That's why every sticker here is a node of its own.":
+				"Ein Look pro Mesh: Ein ganzes Mesh – oder eine einzelne Surface davon – bekommt eine Farbe aus der LPC-Palette und ein LPC-Preset. Deshalb ist hier jeder Sticker ein eigener Node.",
+		"What it's good for: consistency. lpc_singlecolor uses the same palette and presets as lpc_multicolor – so all your own assets are colored from one shared palette, whichever of the two materials they use.":
+				"Wozu das gut ist: Konsistenz. lpc_singlecolor nutzt dieselbe Palette und dieselben Presets wie lpc_multicolor – so sind alle eigenen Assets aus einer gemeinsamen Palette gefärbt, egal welches der beiden Materialien sie tragen.",
 		"Source code of this game on GitHub ›": "Quellcode dieses Spiels auf GitHub ›",
 	},
 }

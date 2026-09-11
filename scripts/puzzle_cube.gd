@@ -1,4 +1,4 @@
-class_name RubiksCube
+class_name PuzzleCube
 extends Node3D
 
 ## An N×N×N twisty cube, assembled at runtime from two meshes: one cubie body
@@ -168,7 +168,7 @@ func build() -> void:
 	layout_changed.emit()
 
 
-## Queues a turn of one layer; see [RubiksCube.Move] for the parameters.
+## Queues a turn of one layer; see [PuzzleCube.Move] for the parameters.
 func turn(axis: int, layer: int, quarters: int) -> void:
 	if _playing:  # counted first: with turn_duration 0 the turn may end the game
 		moves += 1

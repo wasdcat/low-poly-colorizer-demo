@@ -26,7 +26,7 @@ enum PresetMode {
 	RANDOM_PER_STICKER,  ## One random preset per sticker.
 }
 
-@export var cube: RubiksCube
+@export var cube: PuzzleCube
 ## The schemes to choose from; the demo offers a random one on top.
 @export var schemes: Array[CubeScheme] = []
 ## The body looks to choose from.
@@ -63,7 +63,7 @@ var preset := LpcSinglecolorResource.Preset.SOLID
 
 ## The one material all bodies and stickers share. Its plain (non-instance)
 ## uniforms reach every node at once -- the counterpart to the looks.
-var shared_material := RubiksCube.BODY_MESH.surface_get_material(0) as ShaderMaterial
+var shared_material := PuzzleCube.BODY_MESH.surface_get_material(0) as ShaderMaterial
 
 var _face_presets := PackedInt32Array()
 var _sticker_presets := PackedInt32Array()
@@ -83,7 +83,7 @@ func _ready() -> void:
 func set_preset_mode(mode: PresetMode, uniform_preset := LpcSinglecolorResource.Preset.SOLID) -> void:
 	preset_mode = mode
 	preset = uniform_preset
-	_face_presets = _roll_presets(RubiksCube.FACE_NORMALS.size())
+	_face_presets = _roll_presets(PuzzleCube.FACE_NORMALS.size())
 	_sticker_presets = _roll_presets(cube.stickers.size())
 	apply()
 
@@ -105,12 +105,12 @@ func apply() -> void:
 	looks_changed.emit()
 
 
-## The six looks the faces show right now, in [enum RubiksCube.Face] order:
+## The six looks the faces show right now, in [enum PuzzleCube.Face] order:
 ## the scheme's looks with the palette shifts and the preset choice applied.
 ## Fresh copies every call -- the scheme's own resources are never touched.
 func face_looks() -> Array[LpcSinglecolorResource]:
 	var looks: Array[LpcSinglecolorResource] = []
-	for face in RubiksCube.FACE_NORMALS.size():
+	for face in PuzzleCube.FACE_NORMALS.size():
 		var base := scheme.get_look(face)
 		var look := base.duplicate() as LpcSinglecolorResource if base else LpcSinglecolorResource.new()
 		look.palette_cell_x = shift_column(look.palette_cell_x, hue_shift)
@@ -132,7 +132,7 @@ func random_scheme() -> CubeScheme:
 	var hues := LpcSinglecolorResource.PALETTE_COLS - first
 	var start := randi() % hues
 	var row := randi_range(2, LpcSinglecolorResource.PALETTE_ROWS - 3)
-	var faces := range(RubiksCube.FACE_NORMALS.size())
+	var faces := range(PuzzleCube.FACE_NORMALS.size())
 	faces.shuffle()
 	var rolled := CubeScheme.new()
 	rolled.resource_name = "Random"

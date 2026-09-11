@@ -11,12 +11,12 @@ extends Node3D
 ## its row is decided on screen, from how each would move it, so it holds from
 ## any viewing angle. Ctrl + Z undoes.
 
-@export var cube: RubiksCube
+@export var cube: PuzzleCube
 @export var rig: OrbitCamera
 ## Reverses every wheel direction.
 @export var invert_wheel := false
 
-var _hover: RubiksCube.Pick
+var _hover: PuzzleCube.Pick
 var _column := Roll.new()
 var _row := Roll.new()
 var _wheel := 0.0
@@ -63,7 +63,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(_delta: float) -> void:
 	# Picked every frame: orbiting and turning change what is under the mouse.
-	var hover: RubiksCube.Pick = null
+	var hover: PuzzleCube.Pick = null
 	var camera := get_viewport().get_camera_3d()
 	if _mouse_over_view and camera:
 		var hit := cube.pick(camera.project_ray_origin(_mouse), camera.project_ray_normal(_mouse))
@@ -105,8 +105,8 @@ func _on_wheel(event: InputEventMouseButton) -> void:
 
 ## Of the two layers through the hovered sticker, the one that moves it more
 ## up/down on screen becomes the wheel's column, the other one Shift's row.
-func _aim(hit: RubiksCube.Pick, camera: Camera3D) -> void:
-	var normal_axis := RubiksCube.axis_of(hit.face)
+func _aim(hit: PuzzleCube.Pick, camera: Camera3D) -> void:
+	var normal_axis := PuzzleCube.axis_of(hit.face)
 	var point := cube.global_transform * hit.point
 	var first := (normal_axis + 1) % 3
 	var second := (normal_axis + 2) % 3
@@ -139,7 +139,7 @@ func _show_target() -> void:
 	var target := Vector2i(-1, 0)
 	if _hover:
 		if Input.is_key_pressed(KEY_ALT):
-			target = Vector2i(RubiksCube.axis_of(_hover.face), cube.layer_of(_hover.face, 0))
+			target = Vector2i(PuzzleCube.axis_of(_hover.face), cube.layer_of(_hover.face, 0))
 		elif Input.is_key_pressed(KEY_SHIFT):
 			target = Vector2i(_row.axis, _row.layer)
 		else:
