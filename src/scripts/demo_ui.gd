@@ -57,6 +57,10 @@ var _help: Dialog
 var _about: Dialog
 ## The top bar's window buttons. At most one is pressed, so at most one window is open.
 var _dialog_buttons := ButtonGroup.new()
+var _size_slider: HSlider
+var _gap_slider: HSlider
+var _stickers_option: OptionButton
+var _body_option: OptionButton
 
 
 ## A window over the view. Its dimmed backdrop keeps the mouse off the cube.
@@ -213,9 +217,9 @@ func _title_section(box: VBoxContainer) -> void:
 
 func _puzzle_section(box: VBoxContainer) -> void:
 	_heading(box, "Puzzle")
-	_slider(box, "Size", PuzzleCube.MIN_SIZE, PuzzleCube.MAX_SIZE, 1, cube.size, _format_size,
+	_size_slider = _slider(box, "Size", PuzzleCube.MIN_SIZE, PuzzleCube.MAX_SIZE, 1, cube.size, _format_size,
 			func(value: float) -> void: cube.size = int(value))
-	_slider(box, "Gap", 0.0, 0.6, 0.01, cube.gap, _format_float,
+	_gap_slider = _slider(box, "Gap", 0.0, 0.6, 0.01, cube.gap, _format_float,
 			func(value: float) -> void: cube.gap = value)
 	_play = _button(box, "Scramble to Play", func() -> void: cube.scramble())
 	_play.custom_minimum_size.y = 38.0
@@ -232,13 +236,25 @@ func _looks_section(box: VBoxContainer) -> void:
 	for scheme in looks.schemes:
 		scheme_names.append(scheme.resource_name)
 	scheme_names.append("Random")
-	_option(_row(box, "Stickers"), scheme_names, _on_scheme_selected)
+	_stickers_option = _option(_row(box, "Stickers"), scheme_names, _on_scheme_selected)
 
 	var body_names: Array[String] = []
 	for look in looks.body_looks:
 		body_names.append(look.resource_name)
-	_option(_row(box, "Body"), body_names,
+	_body_option = _option(_row(box, "Body"), body_names,
 			func(index: int) -> void: looks.body_look = looks.body_looks[index])
+
+
+## Restores the cube's size, gap, scheme, and body look to the values currently selected in the UI.
+func restore_cube_state() -> void:
+	if _size_slider:
+		cube.size = int(_size_slider.value)
+	if _gap_slider:
+		cube.gap = _gap_slider.value
+	if _stickers_option and looks:
+		_on_scheme_selected(_stickers_option.selected)
+	if _body_option and looks and _body_option.selected >= 0 and _body_option.selected < looks.body_looks.size():
+		looks.body_look = looks.body_looks[_body_option.selected]
 
 
 func _on_scheme_selected(index: int) -> void:

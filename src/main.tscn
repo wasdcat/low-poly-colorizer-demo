@@ -18,6 +18,7 @@
 [ext_resource type="Resource" path="res://looks/body/steel.tres" id="16_steel"]
 [ext_resource type="Resource" path="res://looks/body/gold.tres" id="17_gold"]
 [ext_resource type="Shader" uid="uid://nfa7fq0hxin4" path="res://environment/starfield_sky.gdshader" id="18_sky"]
+[ext_resource type="Script" uid="uid://cgiobsrxckxcj" path="res://scripts/demo_mode.gd" id="19_demo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_studio"]
 shader = ExtResource("18_sky")
@@ -90,3 +91,10 @@ script = ExtResource("5_ui")
 cube = NodePath("../../Cube")
 looks = NodePath("../../Looks")
 controller = NodePath("../..")
+
+[node name="DemoMode" type="Node" parent="." unique_id=928487176 node_paths=PackedStringArray("cube", "rig", "looks", "ui")]
+script = ExtResource("19_demo")
+cube = NodePath("../Cube")
+rig = NodePath("../CameraRig")
+looks = NodePath("../Looks")
+ui = NodePath("../UI/Panel")

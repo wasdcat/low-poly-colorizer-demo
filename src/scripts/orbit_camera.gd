@@ -35,9 +35,11 @@ var view_area := Rect2(0.0, 0.0, 1.0, 1.0):
 
 var _yaw := deg_to_rad(35.0)
 var _pitch := deg_to_rad(-25.0)
+var _roll := 0.0
 var _framed_radius := 0.0
 var _idle_time := 0.0
 var _idle_spin := 0.0  # radians per second right now
+var demo_mode := false
 
 
 func _ready() -> void:
@@ -52,6 +54,8 @@ func _input(event: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
+	if demo_mode:
+		return
 	_idle_time += delta
 	var circling := idle_delay > 0.0 and _idle_time >= idle_delay
 	var top_speed := deg_to_rad(idle_speed)
@@ -60,6 +64,21 @@ func _process(delta: float) -> void:
 			top_speed * (0.5 if circling else 8.0) * delta)
 	if _idle_spin > 0.0:
 		_yaw = wrapf(_yaw - _idle_spin * delta, -PI, PI)
+		_apply()
+
+
+func update_demo_motion(delta: float, demo_time: float) -> void:
+	_idle_time = 0.0
+	_yaw = wrapf(_yaw - deg_to_rad(28.0) * delta, -PI, PI)
+	_pitch = sin(demo_time * 0.7) * deg_to_rad(30.0)
+	_roll = sin(demo_time * 0.45) * deg_to_rad(18.0)
+	_apply()
+
+
+func set_demo_mode(enabled: bool) -> void:
+	demo_mode = enabled
+	if not enabled:
+		_roll = 0.0
 		_apply()
 
 
@@ -99,7 +118,7 @@ func frame(radius: float) -> void:
 func _apply() -> void:
 	if not is_node_ready() or camera == null:
 		return
-	basis = Basis.from_euler(Vector3(_pitch, _yaw, 0.0))
+	basis = Basis.from_euler(Vector3(_pitch, _yaw, _roll))
 	camera.position = Vector3(0.0, 0.0, distance)
 	# Slide the camera (not turn it) so the orbit center lands in the middle of
 	# the view area. Picking stays right: Camera3D's rays include these offsets.
