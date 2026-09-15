@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2026-09-15
+
+### Added
+- **Demo Mode**: An attract/showroom mode that activates on startup and after 20 seconds of inactivity outside of a game round. It smoothly oscillates the cube's gap, rotates the camera dynamically across all three axes (yaw, pitch, roll), cycles cube sizes (from 2 to 5) every 5 seconds, and cycles color schemes and body looks every 3.5 seconds. Any key press, mouse button, or mouse motion immediately exits demo mode and restores the user's settings.
+
+### Changed
+- **Project Structure**: Moved the entire Godot game project into a dedicated `src/` folder, keeping non-runtime repository assets (Blender workfiles, CI/CD, documentation, build outputs) at the root.
+- **Build & CI/CD**: Updated GitHub Actions workflows and export presets to target `src/` and output builds cleanly to `build/`.
+- **Documentation**: Updated repository links, release URLs, and license exception statements.
+
 ## [1.0.1] - 2026-09-11
 
 ### Changed
