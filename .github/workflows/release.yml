@@ -24,9 +24,9 @@ jobs:
         env:
           TAG: ${{ github.event.release.tag_name }}
         run: |
-          version=$(sed -n 's/^config\/version="\(.*\)"$/\1/p' project.godot)
+          version=$(sed -n 's/^config\/version="\(.*\)"$/\1/p' src/project.godot)
           if [ "${TAG#v}" != "$version" ]; then
-            echo "::error::Release tag $TAG does not match config/version \"$version\" in project.godot."
+            echo "::error::Release tag $TAG does not match config/version \"$version\" in src/project.godot."
             exit 1
           fi
 
@@ -36,14 +36,14 @@ jobs:
           templates: "true"
 
       - name: Run test suite
-        run: godot --headless --script res://tests/run_tests.gd
+        run: godot --headless --path src --script res://tests/run_tests.gd
 
       - name: Export
         run: |
           mkdir -p build/windows build/linux build/macos
-          godot --headless --export-release "Windows Desktop" build/windows/low-poly-colorizer-demo.exe
-          godot --headless --export-release "Linux" build/linux/low-poly-colorizer-demo.x86_64
-          godot --headless --export-release "macOS" build/macos/low-poly-colorizer-demo.zip
+          godot --headless --path src --export-release "Windows Desktop" ../build/windows/low-poly-colorizer-demo.exe
+          godot --headless --path src --export-release "Linux" ../build/linux/low-poly-colorizer-demo.x86_64
+          godot --headless --path src --export-release "macOS" ../build/macos/low-poly-colorizer-demo.zip
           for file in build/windows/low-poly-colorizer-demo.exe build/linux/low-poly-colorizer-demo.x86_64 build/macos/low-poly-colorizer-demo.zip; do
             test -s "$file" || { echo "::error::Export missing: $file"; exit 1; }
           done

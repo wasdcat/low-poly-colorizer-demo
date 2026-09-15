@@ -20,12 +20,12 @@ jobs:
         uses: ./.github/actions/setup-godot
 
       - name: Run test suite
-        run: godot --headless --script res://tests/run_tests.gd
+        run: godot --headless --path src --script res://tests/run_tests.gd
 
       - name: Run the demo for 300 frames
         # Script errors do not change Godot's exit code, so read the log.
         run: |
-          godot --headless --quit-after 300 2>&1 | tee run.log
+          godot --headless --path src --quit-after 300 2>&1 | tee run.log
           if grep -qE "SCRIPT ERROR|^ERROR:" run.log; then
             echo "::error::The demo logged errors, see above."
             exit 1

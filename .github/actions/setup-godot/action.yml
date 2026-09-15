@@ -64,5 +64,5 @@ runs:
         # whole import. The game only uses the meshes already saved as .tres,
         # so switch the Blender importer off for this checkout. The editor
         # ignores override.cfg, hence the edit of project.godot itself.
-        printf '\n[filesystem]\n\nimport/blender/enabled=false\n' >> project.godot
-        godot --headless --import
+        printf '\n[filesystem]\n\nimport/blender/enabled=false\n' >> src/project.godot
+        godot --headless --path src --import

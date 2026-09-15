@@ -22,14 +22,14 @@ and the whole cube changes look without any new textures or materials.
 
 - **One palette, many looks.** The sticker schemes (Classic, Showroom with mixed
   presets, Neon, Rainbow, Shades, Greyscale) and the body looks (Black, White,
-  Steel, Gold) are small `.tres` resources in [looks/](looks/). Each one only
+  Steel, Gold) are small `.tres` resources in [src/looks/](src/looks/). Each one only
   points to a palette cell and a preset. *Random* rolls a new scheme at runtime.
 - **Built at runtime.** The cube is built from just two meshes, a body and a
   sticker, in any size from 2×2×2 to 7×7×7. Every turn is an animated rotation
   of a real layer.
-- **All LPC code in one file.** [scripts/cube_looks.gd](scripts/cube_looks.gd)
+- **All LPC code in one file.** [src/scripts/cube_looks.gd](src/scripts/cube_looks.gd)
   holds every call into the LPC export, so it is the file to read. The exported
-  files themselves are in [assets/materials/lpc/](assets/materials/lpc/), along
+  files themselves are in [src/assets/materials/lpc/](src/assets/materials/lpc/), along
   with notes on their import settings.
 
 ## Controls
@@ -58,12 +58,12 @@ open it. To allow it, go to **System Settings ▸ Privacy & Security** and click
 
 ## Running it from source
 
-Open `project.godot` in **Godot 4.8** and press **F5**.
+Open `src/project.godot` in **Godot 4.8** and press **F5**.
 
 The tests run headless:
 
 ```bash
-godot --headless --script res://tests/run_tests.gd
+godot --headless --path src --script res://tests/run_tests.gd
 ```
 
 GitHub Actions runs them on every push. Publishing a release exports the three
