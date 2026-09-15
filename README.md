@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="assets/logos/lpc_logo_small.png" alt="Low Poly Colorizer" width="120">
+  <img src="src/assets/logos/lpc_logo_small.png" alt="Low Poly Colorizer" width="120">
 </p>
 
 # Low Poly Colorizer Demo
 
-![CI](https://github.com/wasdcat/low-poly-colorizer-demo/actions/workflows/ci.yml/badge.svg)
+![Version](https://img.shields.io/badge/version-1.0.1-blue)
 ![License](https://img.shields.io/badge/license-MIT-blue)
-![Godot](https://img.shields.io/badge/Godot-4.8-orange)
+![Godot](https://img.shields.io/badge/Godot-4.x-orange)
 
 A playable puzzle cube in Godot 4.8 that shows what
 [Low Poly Colorizer](https://github.com/wasdcat/low-poly-colorizer) (LPC) can do
@@ -49,7 +49,7 @@ can. The UI is available in English and German.
 
 ## Download
 
-The [latest release](../../releases/latest) comes with builds for Windows, Linux
+The [latest release](releases/latest) comes with builds for Windows, Linux
 and macOS. Unzip one and start it; nothing needs to be installed.
 
 The macOS build is not notarized by Apple. On its first start macOS refuses to
@@ -71,8 +71,4 @@ builds and attaches them to it, and removes the builds of older releases.
 
 ## License
 
-The code and assets are released under the [MIT License](LICENSE). The
-Low Poly Colorizer and WASDCAT Games logos are excluded and may not be reused
-without permission.
-
-A [WASDCAT Games](https://www.wasdcat.com/) project.
+This project is licensed under the [MIT License](LICENSE) — with the exception of the Low Poly Colorizer and WASDCAT Games logos, which remain the property of Frank Winter and are not covered by this license.

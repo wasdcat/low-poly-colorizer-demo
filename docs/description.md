@@ -30,3 +30,7 @@ LPC allows 3D artists to paint low-poly models face by face using a single compa
 
 - **Windows & Linux:** Standalone portable builds. Unzip and run; nothing needs to be installed.
 - **macOS:** On its first launch, macOS will block unnotarized apps. To run: go to **System Settings ▸ Privacy & Security** and click **Open Anyway**.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE) — with the exception of the Low Poly Colorizer and WASDCAT Games logos, which remain the property of Frank Winter and are not covered by this license.
